@@ -3,7 +3,7 @@ import {signIn,signOut,useSession} from "next-auth/react";
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
-import { Button } from './button';
+import { Buttons } from "./button";
 import { Container } from './container';
 
 export const Header: React.FC = () => {
@@ -57,7 +57,7 @@ export const Header: React.FC = () => {
             
               Sign Out
             </button>}
-            <Button size="sm">Get Started</Button>
+            <Buttons size="sm">Get Started</Buttons>
           </div>
         </div>
       </Container>

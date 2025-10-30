@@ -13,7 +13,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
     className?: string;
   };
 
-export const Button: React.FC<ButtonProps> = ({
+export const Buttons: React.FC<ButtonProps> = ({
   variant = 'primary',
   size = 'md',
   children,
