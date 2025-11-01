@@ -26,3 +26,60 @@
     color: hsl(var(--foreground));
   }
 }
+@layer utilities {
+  .bg-gradient-hero {
+    background: var(--gradient-hero);
+  }
+  .bg-gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .bg-gradient-card {
+    background: var(--gradient-card);
+  }
+
+  /* Text colors */
+  .text-foreground {
+    color: hsl(var(--foreground));
+  }
+
+  .text-muted-foreground {
+    color: hsl(var(--muted-foreground));
+  }
+
+  .text-primary {
+    color: hsl(var(--primary));
+  }
+
+  .text-primary-foreground {
+    color: hsl(var(--primary-foreground));
+  }
+
+  /* Background colors */
+  .bg-background {
+    background-color: hsl(var(--background));
+  }
+
+  .bg-card {
+    background-color: hsl(var(--card));
+  }
+
+  .bg-primary {
+    background-color: hsl(var(--primary));
+  }
+
+  /* Borders */
+  .bg-border {
+    background-color: hsl(var(--border));
+  }
+
+  .border-border {
+    border-color: hsl(var(--border));
+  }
+
+  /* Radii */
+  .rounded-theme {
+    border-radius: var(--radius);
+  }
+}
+
