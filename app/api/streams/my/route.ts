@@ -20,10 +20,24 @@ export async function GET(req:NextRequest){
     const streams=await prisma.streams.findMany({
         where:{
             userId:user.id
+        },include:{
+            _count:{
+                select:{
+                    upvotes:true
+                }
+            },upvotes:{
+                where:{
+                    userId:user.id
+                }
+                
+            }
         }
     });
     return NextResponse.json({
-        streams
+        streams:streams.map((_count,...rest)=>({
+            ...rest,
+            upvotes:_count.upvotes
+        }))
     })
 
 }

@@ -22,6 +22,8 @@ export async function POST(req:NextRequest){
     }
     try{
         const data=upvoteschema.parse(await req.json());
+        console.log(data.streamId,user.id)
+
     await prisma.upvote.create({
         data:{
             userId:user.id,
@@ -29,6 +31,11 @@ export async function POST(req:NextRequest){
 
         }
     })
+    
+    return NextResponse.json({
+            message:" Upvoting Done"
+        },{status:200})
+
     }catch(e){
         return NextResponse.json({
             message:"Error while Upvoting"

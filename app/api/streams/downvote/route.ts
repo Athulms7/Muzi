@@ -30,6 +30,10 @@ export async function POST(req:NextRequest){
         }
         }
     })
+    return NextResponse.json({
+            message:" Downvoting Done"
+        },{status:200})
+        
     }catch(e){
         return NextResponse.json({
             message:"Error while Upvoting"
