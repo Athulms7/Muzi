@@ -1,44 +1,53 @@
 import { prisma } from "@/app/lib/db";
-import { getServerSession } from "next-auth"
-import { NextRequest, NextResponse } from "next/server"
-import{z}from "zod"
-const upvoteschema=z.object({
-streamId:z.string()
-})
+import { getServerSession } from "next-auth";
+import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 
-export async function POST(req:NextRequest){
-    const session= await getServerSession();
-    //TODO:you can get rid of db call here
-    const user=await prisma.user.findFirst({
-        where:{
-            email:session?.user?.email ??""
-        }
-    })
+const upvoteSchema = z.object({
+  streamId: z.string(),
+});
 
-    if (!user){
-        return NextResponse.json({
-            message:"Unauthorized"
-        },{status:403})
-    }
-    try{
-        const data=upvoteschema.parse(await req.json());
-        console.log(data.streamId,user.id)
+export async function POST(req: NextRequest) {
+  const session = await getServerSession();
 
-    await prisma.upvote.create({
-        data:{
-            userId:user.id,
-            streamId:data.streamId
+  if (!session?.user?.email) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
+  }
 
-        }
-    })
-    
-    return NextResponse.json({
-            message:" Upvoting Done"
-        },{status:200})
+  const user = await prisma.user.findUnique({
+    where: { email: session.user.email },
+  });
 
-    }catch(e){
-        return NextResponse.json({
-            message:"Error while Upvoting"
-        },{status:403})
-    }
+  if (!user) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
+  }
+
+  try {
+    const data = upvoteSchema.parse(await req.json());
+
+    await prisma.upvote.upsert({
+      where: {
+        userId_streamId: {
+          userId: user.id,
+          streamId: data.streamId,
+        },
+      },
+      update: {}, // do nothing if already exists
+      create: {
+        userId: user.id,
+        streamId: data.streamId,
+      },
+    });
+
+    return NextResponse.json(
+      { message: "Upvoting done" },
+      { status: 200 }
+    );
+  } catch (e) {
+    console.error("Upvote error:", e);
+    return NextResponse.json(
+      { message: "Error while upvoting" },
+      { status: 400 }
+    );
+  }
 }

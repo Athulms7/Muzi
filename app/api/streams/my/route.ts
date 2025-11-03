@@ -33,11 +33,28 @@ export async function GET(req:NextRequest){
             }
         }
     });
-    return NextResponse.json({
-        streams:streams.map((_count,...rest)=>({
-            ...rest,
-            upvotes:_count.upvotes
-        }))
-    })
+    // return NextResponse.json({
+    //     streams:streams.map((_count,...rest)=>({
+    //         ...rest,
+    //         upvotes:_count.upvotes,
+    //         haveUpvoted:rest.length ? true:false
+    //     }))
+    // })
 
+    const formattedStreams = streams.map((stream) => ({
+    id: stream.id,
+    title: stream.title,
+    url: stream.url,
+    thumbnail: stream.thumbnail,
+    upvotes: stream._count.upvotes,
+    liked: stream.upvotes.length > 0, // ✅ user has liked this or not
+    // createdAt: stream.createdAt,
+  }));
+
+  return NextResponse.json({
+    success: true,
+    count: formattedStreams.length,
+    streams: formattedStreams,
+  });
 }
+
