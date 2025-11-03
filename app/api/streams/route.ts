@@ -40,14 +40,13 @@ export async function POST(req: NextRequest) {
 
     const snippet = data.items[0].snippet;
     const title = snippet.title;
-    const thumbnail =
-      snippet.thumbnails?.high?.url ||
+    const thumbnail =snippet.thumbnails?.high?.url;
       // snippet.thumbnails?.medium?.url ||
       // snippet.thumbnails?.default?.url ||
-      "";
+  
 
     
-    await prisma.streams.create({
+    const streams=await prisma.streams.create({
       data: {
         userId: datas.creatorId,
         url: datas.url,
@@ -59,8 +58,9 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({
-      message: "Stream added successfully",
-      data: { title, thumbnail },
+      ...streams,
+      hasUpvoted:false,
+      upvotes:0
     });
   } catch (e: any) {
     console.error("Error while adding stream:", e);

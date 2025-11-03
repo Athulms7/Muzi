@@ -75,17 +75,21 @@ export default function dashboard(){
   // ✅ Add a new stream (client-side only for now)
   const handleSubmit = async () => {
     if (!previewVideoId) return;
+    const res=await axios.post("/api/streams",{
+      creatorId:"cc0d4547-0b83-484d-ae87-ecaa06983c2a",
+      url:youtubeUrl
+    })
 
-    const newStream: Stream = {
-      id: previewVideoId,
-      title: "New Stream",
-      url: youtubeUrl,
-      thumbnail: `https://img.youtube.com/vi/${previewVideoId}/hqdefault.jpg`,
-      upvotes: 0,
-      liked: false,
-    };
+    // const newStream: Stream = {
+    //   id: previewVideoId,
+    //   title: "New Stream",
+    //   url: youtubeUrl,
+    //   thumbnail: `https://img.youtube.com/vi/${previewVideoId}/hqdefault.jpg`,
+    //   upvotes: 0,
+    //   liked: false,
+    // };
 
-    setStreams((prev) => [...prev, newStream]);
+    setStreams((prev) => [...prev,res.data]);
     setYoutubeUrl("");
     setPreviewVideoId("");
   };
