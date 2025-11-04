@@ -6,7 +6,7 @@ import { Sparkles } from 'lucide-react';
 import { Buttons } from "./button";
 import { Container } from './container';
 
-export const Header: React.FC = () => {
+export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
     const session=useSession();
   useEffect(() => {

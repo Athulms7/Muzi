@@ -78,11 +78,38 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ message: "Missing creatorId" }, { status: 400 });
     }
 
-    const streams = await prisma.streams.findMany({
-      where: { userId: creatorId },
+    const streams=await prisma.streams.findMany({
+        where:{
+            userId:creatorId
+        },include:{
+            _count:{
+                select:{
+                    upvotes:true
+                }
+            },upvotes:{
+                where:{
+                    userId:creatorId
+                }
+                
+            }
+        }
     });
 
-    return NextResponse.json({ streams });
+    const formattedStreams = streams.map((stream) => ({
+    id: stream.id,
+    title: stream.title,
+    url: stream.url,
+    thumbnail: stream.thumbnail,
+    upvotes: stream._count.upvotes,
+    liked: stream.upvotes.length > 0, // ✅ user has liked this or not
+    // createdAt: stream.createdAt,
+  }));
+
+  return NextResponse.json({
+    success: true,
+    count: formattedStreams.length,
+    streams: formattedStreams,
+  });
   } catch (e) {
     console.error(e);
     return NextResponse.json({ message: "Failed to fetch streams" }, { status: 500 });

@@ -33,13 +33,6 @@ export async function GET(req:NextRequest){
             }
         }
     });
-    // return NextResponse.json({
-    //     streams:streams.map((_count,...rest)=>({
-    //         ...rest,
-    //         upvotes:_count.upvotes,
-    //         haveUpvoted:rest.length ? true:false
-    //     }))
-    // })
 
     const formattedStreams = streams.map((stream) => ({
     id: stream.id,

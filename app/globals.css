@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
-/* 🌿 Design System — all theme tokens defined in HSL */
+/* 🌿 Design System — HSL Theming */
 @layer theme, base, components, utilities;
 
-/* Define CSS variables in the `theme` layer */
+/* === THEME VARIABLES === */
 @layer theme {
   :root {
     --background: 160 30% 4%;
@@ -16,9 +16,22 @@
     --radius: 0.75rem;
 
     /* 🌈 Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(160 30% 4%) 0%, hsl(160 50% 12%) 100%);
-    --gradient-hero: linear-gradient(180deg, hsl(160 30% 4%) 0%, hsl(160 40% 8%) 50%, hsl(160 30% 4%) 100%);
-    --gradient-card: linear-gradient(135deg, hsl(160 25% 6% / 0.6) 0%, hsl(160 35% 8% / 0.4) 100%);
+    --gradient-primary: linear-gradient(
+      135deg,
+      hsl(160 30% 4%) 0%,
+      hsl(160 50% 12%) 100%
+    );
+    --gradient-hero: linear-gradient(
+      180deg,
+      hsl(160 30% 4%) 0%,
+      hsl(160 40% 8%) 50%,
+      hsl(160 30% 4%) 100%
+    );
+    --gradient-card: linear-gradient(
+      135deg,
+      hsl(160 25% 6% / 0.6) 0%,
+      hsl(160 35% 8% / 0.4) 100%
+    );
   }
 
   body {
@@ -26,10 +39,13 @@
     color: hsl(var(--foreground));
   }
 }
+
+/* === UTILITIES === */
 @layer utilities {
   .bg-gradient-hero {
     background: var(--gradient-hero);
   }
+
   .bg-gradient-primary {
     background: var(--gradient-primary);
   }
@@ -38,13 +54,8 @@
     background: var(--gradient-card);
   }
 
-  /* Text colors */
   .text-foreground {
     color: hsl(var(--foreground));
-  }
-
-  .text-muted-foreground {
-    color: hsl(var(--muted-foreground));
   }
 
   .text-primary {
@@ -55,7 +66,6 @@
     color: hsl(var(--primary-foreground));
   }
 
-  /* Background colors */
   .bg-background {
     background-color: hsl(var(--background));
   }
@@ -68,18 +78,42 @@
     background-color: hsl(var(--primary));
   }
 
-  /* Borders */
-  .bg-border {
-    background-color: hsl(var(--border));
-  }
-
   .border-border {
     border-color: hsl(var(--border));
   }
 
-  /* Radii */
   .rounded-theme {
     border-radius: var(--radius);
   }
 }
 
+/* === Sonner Toast Custom Styles === */
+
+[data-sonner-toast] {
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background-color: var(--popover);
+  color: var(--popover-foreground);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Customize variants */
+[data-sonner-toast][data-type="success"] {
+  background-color: #228c4b !important; /* green */
+  color: white !important;
+}
+
+[data-sonner-toast][data-type="error"] {
+  background-color: #ef4444 !important; /* red */
+  color: white !important;
+}
+
+[data-sonner-toast][data-type="info"] {
+  background-color: #3b82f6 !important; /* blue */
+  color: white !important;
+}
+
+[data-sonner-toast][data-type="warning"] {
+  background-color: #f59e0b !important; /* amber */
+  color: white !important;
+}
