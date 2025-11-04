@@ -11,7 +11,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Music className="w-8 h-8 text-primary" />
-          <span className="text-2xl font-bold">MuZi</span>
+          <span className="text-2xl text-white font-bold">MuZi</span>
         </div>
         
         <div className="hidden md:flex items-center gap-8">
