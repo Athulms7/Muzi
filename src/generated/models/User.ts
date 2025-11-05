@@ -167,6 +167,7 @@ export type UserWhereInput = {
   provider?: Prisma.EnumProviderFilter<"User"> | $Enums.Provider
   streams?: Prisma.StreamsListRelationFilter
   upvotes?: Prisma.UpvoteListRelationFilter
+  CurrentStream?: Prisma.CurrentStreamListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -175,6 +176,7 @@ export type UserOrderByWithRelationInput = {
   provider?: Prisma.SortOrder
   streams?: Prisma.StreamsOrderByRelationAggregateInput
   upvotes?: Prisma.UpvoteOrderByRelationAggregateInput
+  CurrentStream?: Prisma.CurrentStreamOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -186,6 +188,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   provider?: Prisma.EnumProviderFilter<"User"> | $Enums.Provider
   streams?: Prisma.StreamsListRelationFilter
   upvotes?: Prisma.UpvoteListRelationFilter
+  CurrentStream?: Prisma.CurrentStreamListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -212,6 +215,7 @@ export type UserCreateInput = {
   provider: $Enums.Provider
   streams?: Prisma.StreamsCreateNestedManyWithoutUserInput
   upvotes?: Prisma.UpvoteCreateNestedManyWithoutUserInput
+  CurrentStream?: Prisma.CurrentStreamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -220,6 +224,7 @@ export type UserUncheckedCreateInput = {
   provider: $Enums.Provider
   streams?: Prisma.StreamsUncheckedCreateNestedManyWithoutUserInput
   upvotes?: Prisma.UpvoteUncheckedCreateNestedManyWithoutUserInput
+  CurrentStream?: Prisma.CurrentStreamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -228,6 +233,7 @@ export type UserUpdateInput = {
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   streams?: Prisma.StreamsUpdateManyWithoutUserNestedInput
   upvotes?: Prisma.UpvoteUpdateManyWithoutUserNestedInput
+  CurrentStream?: Prisma.CurrentStreamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -236,6 +242,7 @@ export type UserUncheckedUpdateInput = {
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   streams?: Prisma.StreamsUncheckedUpdateManyWithoutUserNestedInput
   upvotes?: Prisma.UpvoteUncheckedUpdateManyWithoutUserNestedInput
+  CurrentStream?: Prisma.CurrentStreamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -301,6 +308,20 @@ export type UserUpdateOneRequiredWithoutStreamsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutStreamsInput, Prisma.UserUpdateWithoutStreamsInput>, Prisma.UserUncheckedUpdateWithoutStreamsInput>
 }
 
+export type UserCreateNestedOneWithoutCurrentStreamInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCurrentStreamInput, Prisma.UserUncheckedCreateWithoutCurrentStreamInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCurrentStreamInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutCurrentStreamNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCurrentStreamInput, Prisma.UserUncheckedCreateWithoutCurrentStreamInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCurrentStreamInput
+  upsert?: Prisma.UserUpsertWithoutCurrentStreamInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCurrentStreamInput, Prisma.UserUpdateWithoutCurrentStreamInput>, Prisma.UserUncheckedUpdateWithoutCurrentStreamInput>
+}
+
 export type UserCreateNestedOneWithoutUpvotesInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutUpvotesInput, Prisma.UserUncheckedCreateWithoutUpvotesInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutUpvotesInput
@@ -320,6 +341,7 @@ export type UserCreateWithoutStreamsInput = {
   email: string
   provider: $Enums.Provider
   upvotes?: Prisma.UpvoteCreateNestedManyWithoutUserInput
+  CurrentStream?: Prisma.CurrentStreamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutStreamsInput = {
@@ -327,6 +349,7 @@ export type UserUncheckedCreateWithoutStreamsInput = {
   email: string
   provider: $Enums.Provider
   upvotes?: Prisma.UpvoteUncheckedCreateNestedManyWithoutUserInput
+  CurrentStream?: Prisma.CurrentStreamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutStreamsInput = {
@@ -350,12 +373,62 @@ export type UserUpdateWithoutStreamsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   upvotes?: Prisma.UpvoteUpdateManyWithoutUserNestedInput
+  CurrentStream?: Prisma.CurrentStreamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStreamsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  upvotes?: Prisma.UpvoteUncheckedUpdateManyWithoutUserNestedInput
+  CurrentStream?: Prisma.CurrentStreamUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutCurrentStreamInput = {
+  id?: string
+  email: string
+  provider: $Enums.Provider
+  streams?: Prisma.StreamsCreateNestedManyWithoutUserInput
+  upvotes?: Prisma.UpvoteCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutCurrentStreamInput = {
+  id?: string
+  email: string
+  provider: $Enums.Provider
+  streams?: Prisma.StreamsUncheckedCreateNestedManyWithoutUserInput
+  upvotes?: Prisma.UpvoteUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutCurrentStreamInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCurrentStreamInput, Prisma.UserUncheckedCreateWithoutCurrentStreamInput>
+}
+
+export type UserUpsertWithoutCurrentStreamInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCurrentStreamInput, Prisma.UserUncheckedUpdateWithoutCurrentStreamInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCurrentStreamInput, Prisma.UserUncheckedCreateWithoutCurrentStreamInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCurrentStreamInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCurrentStreamInput, Prisma.UserUncheckedUpdateWithoutCurrentStreamInput>
+}
+
+export type UserUpdateWithoutCurrentStreamInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  streams?: Prisma.StreamsUpdateManyWithoutUserNestedInput
+  upvotes?: Prisma.UpvoteUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCurrentStreamInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  streams?: Prisma.StreamsUncheckedUpdateManyWithoutUserNestedInput
   upvotes?: Prisma.UpvoteUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -364,6 +437,7 @@ export type UserCreateWithoutUpvotesInput = {
   email: string
   provider: $Enums.Provider
   streams?: Prisma.StreamsCreateNestedManyWithoutUserInput
+  CurrentStream?: Prisma.CurrentStreamCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUpvotesInput = {
@@ -371,6 +445,7 @@ export type UserUncheckedCreateWithoutUpvotesInput = {
   email: string
   provider: $Enums.Provider
   streams?: Prisma.StreamsUncheckedCreateNestedManyWithoutUserInput
+  CurrentStream?: Prisma.CurrentStreamUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUpvotesInput = {
@@ -394,6 +469,7 @@ export type UserUpdateWithoutUpvotesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   streams?: Prisma.StreamsUpdateManyWithoutUserNestedInput
+  CurrentStream?: Prisma.CurrentStreamUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpvotesInput = {
@@ -401,6 +477,7 @@ export type UserUncheckedUpdateWithoutUpvotesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   streams?: Prisma.StreamsUncheckedUpdateManyWithoutUserNestedInput
+  CurrentStream?: Prisma.CurrentStreamUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -411,11 +488,13 @@ export type UserUncheckedUpdateWithoutUpvotesInput = {
 export type UserCountOutputType = {
   streams: number
   upvotes: number
+  CurrentStream: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   streams?: boolean | UserCountOutputTypeCountStreamsArgs
   upvotes?: boolean | UserCountOutputTypeCountUpvotesArgs
+  CurrentStream?: boolean | UserCountOutputTypeCountCurrentStreamArgs
 }
 
 /**
@@ -442,6 +521,13 @@ export type UserCountOutputTypeCountUpvotesArgs<ExtArgs extends runtime.Types.Ex
   where?: Prisma.UpvoteWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCurrentStreamArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CurrentStreamWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -449,6 +535,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   provider?: boolean
   streams?: boolean | Prisma.User$streamsArgs<ExtArgs>
   upvotes?: boolean | Prisma.User$upvotesArgs<ExtArgs>
+  CurrentStream?: boolean | Prisma.User$CurrentStreamArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -474,6 +561,7 @@ export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   streams?: boolean | Prisma.User$streamsArgs<ExtArgs>
   upvotes?: boolean | Prisma.User$upvotesArgs<ExtArgs>
+  CurrentStream?: boolean | Prisma.User$CurrentStreamArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -484,6 +572,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     streams: Prisma.$StreamsPayload<ExtArgs>[]
     upvotes: Prisma.$UpvotePayload<ExtArgs>[]
+    CurrentStream: Prisma.$CurrentStreamPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -885,6 +974,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   streams<T extends Prisma.User$streamsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$streamsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StreamsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   upvotes<T extends Prisma.User$upvotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$upvotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UpvotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  CurrentStream<T extends Prisma.User$CurrentStreamArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$CurrentStreamArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CurrentStreamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1350,6 +1440,30 @@ export type User$upvotesArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   distinct?: Prisma.UpvoteScalarFieldEnum | Prisma.UpvoteScalarFieldEnum[]
+}
+
+/**
+ * User.CurrentStream
+ */
+export type User$CurrentStreamArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CurrentStream
+   */
+  select?: Prisma.CurrentStreamSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CurrentStream
+   */
+  omit?: Prisma.CurrentStreamOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CurrentStreamInclude<ExtArgs> | null
+  where?: Prisma.CurrentStreamWhereInput
+  orderBy?: Prisma.CurrentStreamOrderByWithRelationInput | Prisma.CurrentStreamOrderByWithRelationInput[]
+  cursor?: Prisma.CurrentStreamWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CurrentStreamScalarFieldEnum | Prisma.CurrentStreamScalarFieldEnum[]
 }
 
 /**

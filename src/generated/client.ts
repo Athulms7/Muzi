@@ -54,6 +54,11 @@ export type User = Prisma.UserModel
  */
 export type Streams = Prisma.StreamsModel
 /**
+ * Model CurrentStream
+ * 
+ */
+export type CurrentStream = Prisma.CurrentStreamModel
+/**
  * Model Upvote
  * 
  */

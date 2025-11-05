@@ -50,6 +50,7 @@ export const AnyNull = runtime.objectEnumValues.instances.AnyNull
 export const ModelName = {
   User: 'User',
   Streams: 'Streams',
+  CurrentStream: 'CurrentStream',
   Upvote: 'Upvote'
 } as const
 
@@ -92,6 +93,15 @@ export const StreamsScalarFieldEnum = {
 export type StreamsScalarFieldEnum = (typeof StreamsScalarFieldEnum)[keyof typeof StreamsScalarFieldEnum]
 
 
+export const CurrentStreamScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  streamId: 'streamId'
+} as const
+
+export type CurrentStreamScalarFieldEnum = (typeof CurrentStreamScalarFieldEnum)[keyof typeof CurrentStreamScalarFieldEnum]
+
+
 export const UpvoteScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -115,4 +125,12 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

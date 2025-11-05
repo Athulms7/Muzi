@@ -391,6 +391,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   Streams: 'Streams',
+  CurrentStream: 'CurrentStream',
   Upvote: 'Upvote'
 } as const
 
@@ -407,7 +408,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "streams" | "upvote"
+    modelProps: "user" | "streams" | "currentStream" | "upvote"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -559,6 +560,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    CurrentStream: {
+      payload: Prisma.$CurrentStreamPayload<ExtArgs>
+      fields: Prisma.CurrentStreamFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CurrentStreamFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentStreamPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CurrentStreamFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentStreamPayload>
+        }
+        findFirst: {
+          args: Prisma.CurrentStreamFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentStreamPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CurrentStreamFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentStreamPayload>
+        }
+        findMany: {
+          args: Prisma.CurrentStreamFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentStreamPayload>[]
+        }
+        create: {
+          args: Prisma.CurrentStreamCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentStreamPayload>
+        }
+        createMany: {
+          args: Prisma.CurrentStreamCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CurrentStreamCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentStreamPayload>[]
+        }
+        delete: {
+          args: Prisma.CurrentStreamDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentStreamPayload>
+        }
+        update: {
+          args: Prisma.CurrentStreamUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentStreamPayload>
+        }
+        deleteMany: {
+          args: Prisma.CurrentStreamDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CurrentStreamUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CurrentStreamUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentStreamPayload>[]
+        }
+        upsert: {
+          args: Prisma.CurrentStreamUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurrentStreamPayload>
+        }
+        aggregate: {
+          args: Prisma.CurrentStreamAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCurrentStream>
+        }
+        groupBy: {
+          args: Prisma.CurrentStreamGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CurrentStreamGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CurrentStreamCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CurrentStreamCountAggregateOutputType> | number
+        }
+      }
+    }
     Upvote: {
       payload: Prisma.$UpvotePayload<ExtArgs>
       fields: Prisma.UpvoteFieldRefs
@@ -695,6 +770,15 @@ export const StreamsScalarFieldEnum = {
 export type StreamsScalarFieldEnum = (typeof StreamsScalarFieldEnum)[keyof typeof StreamsScalarFieldEnum]
 
 
+export const CurrentStreamScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  streamId: 'streamId'
+} as const
+
+export type CurrentStreamScalarFieldEnum = (typeof CurrentStreamScalarFieldEnum)[keyof typeof CurrentStreamScalarFieldEnum]
+
+
 export const UpvoteScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -718,6 +802,14 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
 
@@ -877,6 +969,7 @@ export interface PrismaClientOptions {
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   streams?: Prisma.StreamsOmit
+  currentStream?: Prisma.CurrentStreamOmit
   upvote?: Prisma.UpvoteOmit
 }
 

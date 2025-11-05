@@ -14,6 +14,8 @@ model User {
   provider Provider
   streams  Streams[]
   upvotes  Upvote[]
+
+  CurrentStream CurrentStream[]
 }
 
 model Streams {
@@ -27,13 +29,22 @@ model Streams {
   thumbnail String
   user        User       @relation(fields: [userId], references: [id])
   upvotes     Upvote[]
+  currentStream   CurrentStream?
+}
+model CurrentStream{
+   id        String   @id @default(uuid())
+  userId    String   @unique
+  streamId  String? @unique
+
+  user      User     @relation(fields: [userId], references: [id])
+  stream    Streams? @relation(fields: [streamId], references: [id])
 }
 
 model Upvote {
   id       String  @id @default(uuid())
   userId   String
   streamId String
-  stream   Streams @relation(fields: [streamId], references: [id])
+  stream   Streams @relation(fields: [streamId], references: [id],onDelete: Cascade)
   user     User    @relation(fields: [userId], references: [id])
 
   @@unique([userId, streamId])

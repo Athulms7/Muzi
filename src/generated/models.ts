@@ -9,5 +9,6 @@
  */
 export type * from './models/User'
 export type * from './models/Streams'
+export type * from './models/CurrentStream'
 export type * from './models/Upvote'
 export type * from './commonInputTypes'
