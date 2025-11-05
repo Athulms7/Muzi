@@ -14,9 +14,10 @@ export interface Stream {
   upvotes: number;
   liked: boolean;
 }
-const creatorId="cc0d4547-0b83-484d-ae87-ecaa06983c2a"
+
 export default function Dashboard() {
+  const creatorId="cc0d4547-0b83-484d-ae87-ecaa06983c2a"
   return(
-    <StreamView creatorId={creatorId}/>
+    <StreamView creatorId={creatorId} playVideo={true}/>
   )
 }

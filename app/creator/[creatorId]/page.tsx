@@ -9,7 +9,7 @@ export default async function CreatorPage({
 
   return (
     <div>
-      <StreamView creatorId={creatorId} />
+      <StreamView creatorId={creatorId} playVideo={false} />
     </div>
   );
 }

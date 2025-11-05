@@ -5,7 +5,8 @@ import { Play, Heart, Share2 } from "lucide-react";
 import { Header } from "../_components/Appbar";
 import axios from "axios";
 import { toast } from "sonner";
-import Navbar from "./Navbar";
+// import Navbar from "./Navbar";
+import YouTube, { YouTubeProps } from "react-youtube";
 
 export interface Stream {
   id: string;
@@ -16,13 +17,26 @@ export interface Stream {
   liked: boolean;
 }
 
-export default function StreamView({ creatorId }: { creatorId: string }) {
+export default function StreamView({ creatorId,playVideo=false }: { creatorId: string,playVideo:Boolean }) {
   const [youtubeUrl, setYoutubeUrl] = useState("");
   const [previewVideoId, setPreviewVideoId] = useState("");
   const [streams, setStreams] = useState<Stream[]>([]);
   const [currentVideo, setCurrentVideo] = useState<Stream | null>(null);
 
   const REFRESH_INTERVAL = 10 * 1000;
+
+
+  const [player, setPlayer] = useState<any>(null);
+
+const onPlayerReady = (event: any) => {
+  setPlayer(event.target);
+  if (playVideo) event.target.playVideo(); // autoplay only if creator
+};
+
+const onEnd = () => {
+  // Do nothing automatically — next plays only when clicked
+};
+
 
   async function refreshStreams() {
     try {
@@ -39,9 +53,9 @@ export default function StreamView({ creatorId }: { creatorId: string }) {
           upvotes: s.upvotes ?? 0,
           liked: s.liked ?? false,
         }));
-
+        console.log(res.data)
         setStreams(fetched);
-        if (!currentVideo && fetched.length > 0) setCurrentVideo(fetched[0]);
+        if (!currentVideo && fetched.length > 0) setCurrentVideo(res.data.activeStream.stream);
       }
     } catch (err) {
       console.error("Error fetching streams:", err);
@@ -54,12 +68,17 @@ export default function StreamView({ creatorId }: { creatorId: string }) {
     return () => clearInterval(interval);
   }, []);
 
-  const extractVideoId = (url: string) => {
+ const extractVideoId = (url: string): string | null => {
+  try {
     const regExp =
-      /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+      /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^#&?]{11})/;
     const match = url.match(regExp);
-    return match && match[2].length === 11 ? match[2] : null;
-  };
+    return match ? match[1] : null;
+  } catch {
+    return null;
+  }
+};
+
 
   const handleUrlChange = (url: string) => {
     setYoutubeUrl(url);
@@ -117,12 +136,22 @@ export default function StreamView({ creatorId }: { creatorId: string }) {
     }
   };
 
-  const handleNext = () => {
-    if (streams.length > 1) {
-      setCurrentVideo(streams[1]);
-      setStreams((prev) => prev.slice(1));
+ const handleNext = async () => {
+  if (streams.length === 0) return;
+
+  try {
+    const { data } = await axios.get("/api/streams/next");
+    console.log(data.stream)
+    if (data?.stream) {
+      setCurrentVideo(data.stream);
+    } else {
+      console.warn("No stream returned from API");
     }
-  };
+  } catch (error) {
+    console.error("Error fetching next stream:", error);
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-gradient-hero p-4 md:p-8 text-foreground mt-10 overflow-hidden flex justify-center">
@@ -132,12 +161,22 @@ export default function StreamView({ creatorId }: { creatorId: string }) {
     <div className="grid gap-6 lg:grid-cols-[1fr_1.2fr] items-start justify-center">
       {/* 🎶 Queue Section (Left) */}
       <div className="rounded-theme border border-border bg-gradient-card p-6 shadow-elegant sticky top-8 h-[calc(100vh-6rem)] flex flex-col">
-        <h2 className="mb-2 text-xl font-semibold">
+        <h2 className="mb-1 text-xl font-semibold">
           Queue ({streams.length})
         </h2>
-        <p className="text-white mb-3 text-lg font-bold">
-          Vote for the next to play 🎶
-        </p>
+        <div className="mb-2 flex items-center justify-between">
+            <h2 className="text-lg font-semibold">Vote for the next to play 🎶</h2>
+            <button
+              onClick={handleShare}
+              className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-1.5 text-sm hover:bg-primary/10 transition"
+            >
+              <Share2 className="h-4 w-4" />
+              Share
+            </button>
+          </div>
+        {/* <p className="text-white mb-3 text-lg font-bold">
+          
+        </p> */}
 
         <div className="space-y-3 overflow-y-auto flex-1 pr-2 scrollbar-hide">
           {streams.length === 0 ? (
@@ -190,16 +229,7 @@ export default function StreamView({ creatorId }: { creatorId: string }) {
 
         {/* 🎧 Submit Section */}
         <div className="rounded-theme border border-border bg-gradient-card p-4 mt-4 shadow-elegant backdrop-blur-sm">
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-lg font-semibold">Add to Queue</h2>
-            <button
-              onClick={handleShare}
-              className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-1.5 text-sm hover:bg-primary/10 transition"
-            >
-              <Share2 className="h-4 w-4" />
-              Share
-            </button>
-          </div>
+          
 
           <input
             type="text"
@@ -238,13 +268,13 @@ export default function StreamView({ creatorId }: { creatorId: string }) {
               <Play className="h-5 w-5 text-primary" />
               <h2 className="text-xl font-semibold">Now Playing</h2>
             </div>
-            <button
+            {playVideo &&<button
               onClick={handleNext}
               disabled={streams.length <= 1}
               className="rounded-md bg-primary px-6 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
             >
               Next Song
-            </button>
+            </button>}
           </div>
 
           {currentVideo ? (
@@ -268,6 +298,7 @@ export default function StreamView({ creatorId }: { creatorId: string }) {
               No current stream playing
             </p>
           )}
+          
         </div>
       </div>
     </div>

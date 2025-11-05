@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/app/lib/db";
 import axios from "axios";
+import { Whisper } from "next/font/google";
 
 const CreateStreamSchema = z.object({
   creatorId: z.string(),
@@ -105,10 +106,17 @@ export async function GET(req: NextRequest) {
     // createdAt: stream.createdAt,
   }));
 
+  const activeStream=await prisma.currentStream.findFirst({
+where:{userId:creatorId},
+include: {
+        stream: true,},
+  })
+
   return NextResponse.json({
     success: true,
     count: formattedStreams.length,
     streams: formattedStreams,
+    activeStream
   });
   } catch (e) {
     console.error(e);
