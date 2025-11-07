@@ -5,8 +5,6 @@ import { Play, Heart, Share2 } from "lucide-react";
 import { Header } from "../_components/Appbar";
 import axios from "axios";
 import { toast } from "sonner";
-// import Navbar from "./Navbar";
-import YouTube, { YouTubeProps } from "react-youtube";
 
 export interface Stream {
   id: string;
@@ -24,19 +22,6 @@ export default function StreamView({ creatorId,playVideo=false }: { creatorId: s
   const [currentVideo, setCurrentVideo] = useState<Stream | null>(null);
 
   const REFRESH_INTERVAL = 10 * 1000;
-
-
-  const [player, setPlayer] = useState<any>(null);
-
-const onPlayerReady = (event: any) => {
-  setPlayer(event.target);
-  if (playVideo) event.target.playVideo(); // autoplay only if creator
-};
-
-const onEnd = () => {
-  // Do nothing automatically — next plays only when clicked
-};
-
 
   async function refreshStreams() {
     try {
@@ -270,7 +255,7 @@ const onEnd = () => {
             </div>
             {playVideo &&<button
               onClick={handleNext}
-              disabled={streams.length <= 1}
+              disabled={streams.length == 0}
               className="rounded-md bg-primary px-6 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
             >
               Next Song
